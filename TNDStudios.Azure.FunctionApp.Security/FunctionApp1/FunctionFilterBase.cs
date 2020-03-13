@@ -13,13 +13,8 @@ using System.Threading.Tasks;
 
 namespace FunctionApp1
 {
-    public class FunctionBase : IFunctionInvocationFilter
+    public class FunctionFilterBase : FunctionSecurityBase, IFunctionInvocationFilter
     {
-        public void SecurityContext()
-        {
-
-        }
-
         public Task OnExecutingAsync(FunctionExecutingContext executingContext, CancellationToken cancellationToken)
         {
             DefaultHttpRequest request = ExtractHttpRequest(executingContext.Arguments);
@@ -37,12 +32,14 @@ namespace FunctionApp1
 
         private DefaultHttpRequest ExtractHttpRequest(IReadOnlyDictionary<String, Object> argumentList)
         {
-            return (DefaultHttpRequest)argumentList.Where(arg => arg.Value.GetType() == typeof(DefaultHttpRequest)).FirstOrDefault().Value;
-        }
-
-        public FunctionBase()
-        {
-
+            try
+            {
+                return (DefaultHttpRequest)argumentList.Where(arg => arg.Value.GetType() == typeof(DefaultHttpRequest)).FirstOrDefault().Value;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
