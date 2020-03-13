@@ -15,6 +15,11 @@ namespace FunctionApp1
 {
     public class FunctionFilterBase : FunctionSecurityBase, IFunctionInvocationFilter
     {
+        public FunctionFilterBase()
+        {
+
+        }
+
         public Task OnExecutingAsync(FunctionExecutingContext executingContext, CancellationToken cancellationToken)
         {
             DefaultHttpRequest request = ExtractHttpRequest(executingContext.Arguments);

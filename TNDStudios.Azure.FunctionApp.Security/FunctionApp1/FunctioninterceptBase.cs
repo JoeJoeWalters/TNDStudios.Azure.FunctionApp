@@ -15,5 +15,9 @@ namespace FunctionApp1
 {
     public class FunctionInterceptBase : FunctionSecurityBase
     {
+        public FunctionInterceptBase()
+        {
+
+        }
     }
 }

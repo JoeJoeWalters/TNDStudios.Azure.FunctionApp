@@ -15,6 +15,11 @@ namespace FunctionApp1
 {
     public class TestFunctions : FunctionFilterBase
     {
+        public TestFunctions() : base()
+        {
+
+        }
+
         [FunctionName("Function1")]
         public IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
