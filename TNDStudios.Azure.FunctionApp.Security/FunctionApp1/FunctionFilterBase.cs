@@ -20,12 +20,18 @@ namespace FunctionApp1
 
         }
 
+        /// <summary>
+        /// Executed before each function call to scan and process each request
+        /// </summary>
+        /// <param name="executingContext">The context of the function being called with the binding</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public Task OnExecutingAsync(FunctionExecutingContext executingContext, CancellationToken cancellationToken)
         {
             DefaultHttpRequest request = ExtractHttpRequest(executingContext.Arguments);
             if (request != null)
             {
-
+                   
             }
             return Task.CompletedTask;
         }
