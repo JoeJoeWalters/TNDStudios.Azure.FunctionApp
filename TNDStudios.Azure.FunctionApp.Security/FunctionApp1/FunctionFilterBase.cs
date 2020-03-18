@@ -28,10 +28,16 @@ namespace FunctionApp1
         /// <returns></returns>
         public Task OnExecutingAsync(FunctionExecutingContext executingContext, CancellationToken cancellationToken)
         {
+            // Check to see if there is a Http Request component that triggered this request
             DefaultHttpRequest request = ExtractHttpRequest(executingContext.Arguments);
             if (request != null)
             {
-                   
+                // If there was a Http Request then get the bearer token from that request
+                String bearerToken = ExtractBearerToken(request);
+                if (bearerToken != String.Empty)
+                {
+                    // If there was a bearer token
+                }
             }
             return Task.CompletedTask;
         }
@@ -39,6 +45,16 @@ namespace FunctionApp1
         public Task OnExecutedAsync(FunctionExecutedContext executedContext, CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
+        }
+
+        private String ExtractBearerToken(DefaultHttpRequest request)
+        {
+            if (request.GetTypedHeaders().Headers.ContainsKey("bearer"))
+            {
+                return request.GetTypedHeaders().Headers["bearer"].FirstOrDefault();
+            }
+            else
+                return String.Empty;
         }
 
         private DefaultHttpRequest ExtractHttpRequest(IReadOnlyDictionary<String, Object> argumentList)
