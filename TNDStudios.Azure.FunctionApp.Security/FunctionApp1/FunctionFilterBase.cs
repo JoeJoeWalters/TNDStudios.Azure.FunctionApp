@@ -13,6 +13,11 @@ using System.Threading.Tasks;
 
 namespace FunctionApp1
 {
+    public class TokenResult
+    {
+        public Boolean Success { get; set; } = false;
+    }
+
     public class FunctionFilterBase : FunctionSecurityBase, IFunctionInvocationFilter
     {
         public FunctionFilterBase()
@@ -29,7 +34,7 @@ namespace FunctionApp1
         public Task OnExecutingAsync(FunctionExecutingContext executingContext, CancellationToken cancellationToken)
         {
             // Check to see if there is a Http Request component that triggered this request
-            DefaultHttpRequest request = ExtractHttpRequest(executingContext.Arguments);
+            HttpRequest request = ExtractHttpRequest(executingContext.Arguments);
             if (request != null)
             {
                 // If there was a Http Request then get the bearer token from that request
@@ -37,8 +42,14 @@ namespace FunctionApp1
                 if (bearerToken != String.Empty)
                 {
                     // If there was a bearer token
+                    TokenResult result = ValidateToken(bearerToken);
+                    if (result.Success)
+                    {
+
+                    }
                 }
             }
+
             return Task.CompletedTask;
         }
 
@@ -47,17 +58,30 @@ namespace FunctionApp1
             return Task.CompletedTask;
         }
 
-        private String ExtractBearerToken(DefaultHttpRequest request)
+        private TokenResult ValidateToken(String token)
         {
-            if (request.GetTypedHeaders().Headers.ContainsKey("bearer"))
+            TokenResult result = new TokenResult() { Success = false };
+
+            return result;
+        }
+
+        private String ExtractBearerToken(HttpRequest request)
+        {
+            // Get the headers from the Http Request
+            if (request.Headers.ContainsKey("Authorization"))
             {
-                return request.GetTypedHeaders().Headers["bearer"].FirstOrDefault();
+                String authHeader = request.Headers["Authorization"].FirstOrDefault();
+                string[] authParts = authHeader.Split(null);
+                if (authParts.Length == 2 && authParts[0].Equals("Bearer"))
+                    return authParts[1];
+                else
+                    return String.Empty;
             }
             else
                 return String.Empty;
         }
 
-        private DefaultHttpRequest ExtractHttpRequest(IReadOnlyDictionary<String, Object> argumentList)
+        private HttpRequest ExtractHttpRequest(IReadOnlyDictionary<String, Object> argumentList)
         {
             try
             {
