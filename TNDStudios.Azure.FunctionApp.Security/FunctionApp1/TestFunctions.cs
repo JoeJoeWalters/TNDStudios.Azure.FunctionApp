@@ -13,7 +13,7 @@ using System.Threading;
 
 namespace FunctionApp1
 {
-    public class TestFunctions : FunctionFilterBase
+    public class TestFunctions : FunctionSecurityBase
     {
         public TestFunctions() : base()
         {
@@ -25,6 +25,8 @@ namespace FunctionApp1
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
+            base.InitialiseSecurity(req);
+
             return HasPermission("testpermission")
                 ? (ActionResult)new OkObjectResult($"Hello, Tester")
                 : new BadRequestObjectResult("Please pass a name on the query string or in the request body");
