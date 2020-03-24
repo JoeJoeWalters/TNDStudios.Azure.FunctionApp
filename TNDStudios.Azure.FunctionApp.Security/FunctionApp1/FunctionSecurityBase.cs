@@ -30,6 +30,8 @@ namespace FunctionApp1
 
         public virtual Boolean Debugging { get; set; } = false;
 
+        private List<String> permissions { get; set; } = new List<String>();
+
         public void InitialiseSecurity(HttpRequest request)
         {
             if (request != null)
@@ -42,10 +44,13 @@ namespace FunctionApp1
                     TokenResult result = ValidateToken(bearerToken);
                     if (result.Success)
                     {
-
+                        // Translate the permissions list from the resulting claims principal
+                        permissions = new List<String>() { "testpermission" };
                     }
                 }
             }
+            else
+                throw new Exception("Cannot initialise security context as there is no Http Context to resolve it from");
         }
 
         public Boolean HasPermission(String permission)
