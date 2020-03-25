@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -15,13 +16,19 @@ using System.Text;
 
 namespace FunctionApp1
 {
+    public enum Permissions
+    {
+        [Description("00001-00001-00001")]
+        TestPermission,
+    }
+
     public class TokenResult
     {
         public Boolean Success { get; set; } = false;
         public ClaimsPrincipal Principal { get; set; } = null;
     }
 
-    public abstract class FunctionSecurityBase
+    public abstract class FunctionSecurityBase<T>
     {
         public virtual String Authority { get; set; }
         public virtual String ValidAudiences { get; set; }
@@ -30,8 +37,12 @@ namespace FunctionApp1
 
         public virtual Boolean Debugging { get; set; } = false;
 
-        private List<String> permissions { get; set; } = new List<String>();
+        private List<T> permissions { get; set; } = new List<T>();
 
+        /// <summary>
+        /// Starup and initialisation of the security context usually called at the start of the Azure function
+        /// </summary>
+        /// <param name="request">The request sent to the Azure Function</param>
         public void InitialiseSecurity(HttpRequest request)
         {
             if (request != null)
@@ -45,7 +56,7 @@ namespace FunctionApp1
                     if (result.Success)
                     {
                         // Translate the permissions list from the resulting claims principal
-                        permissions = new List<String>() { "testpermission" };
+                        permissions = new List<T>() { };
                     }
                 }
             }
@@ -53,11 +64,18 @@ namespace FunctionApp1
                 throw new Exception("Cannot initialise security context as there is no Http Context to resolve it from");
         }
 
-        public Boolean HasPermission(String permission)
-        {
-            return true;
-        }
+        /// <summary>
+        /// Does the current context have permissions of a given type
+        /// </summary>
+        /// <param name="value">The enum item of the pre-defined type</param>
+        /// <returns>If the context has the permission</returns>
+        public Boolean HasPermission(T value) => permissions.Contains(value);
 
+        /// <summary>
+        /// Validate the token taken from the http context
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         private TokenResult ValidateToken(String token)
         {
             TokenResult result = new TokenResult() { Success = false };

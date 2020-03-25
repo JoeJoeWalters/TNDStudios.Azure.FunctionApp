@@ -13,7 +13,7 @@ using System.Threading;
 
 namespace FunctionApp1
 {
-    public class TestFunctions : FunctionSecurityBase
+    public class TestFunctions : FunctionSecurityBase<Permissions>
     {
         public TestFunctions() : base()
         {
@@ -27,7 +27,7 @@ namespace FunctionApp1
         {
             base.InitialiseSecurity(req);
 
-            return HasPermission("testpermission")
+            return HasPermission(Permissions.TestPermission)
                 ? (ActionResult)new OkObjectResult($"Hello, Tester")
                 : new BadRequestObjectResult("Please pass a name on the query string or in the request body");
         }
