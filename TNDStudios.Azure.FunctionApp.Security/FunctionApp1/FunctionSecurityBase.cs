@@ -18,6 +18,21 @@ namespace FunctionApp1
         TestPermission,
     }
 
+    public class SecurityResult<T>
+    {
+        /// <summary>
+        /// LIst of permissions derived from the token
+        /// </summary>
+        public List<T> Permissions { get; set; } = new List<T>();
+
+        /// <summary>
+        /// Does the current context have permissions of a given type
+        /// </summary>
+        /// <param name="value">The enum item of the pre-defined type</param>
+        /// <returns>If the context has the permission</returns>
+        public Boolean HasPermission(T value) => Permissions.Contains(value);
+    }
+
     public class TokenResult
     {
         public Boolean Success { get; set; } = false;
@@ -33,14 +48,13 @@ namespace FunctionApp1
 
         public virtual Boolean Debugging { get; set; } = false;
 
-        private List<T> permissions { get; set; } = new List<T>();
-
         /// <summary>
         /// Starup and initialisation of the security context usually called at the start of the Azure function
         /// </summary>
         /// <param name="request">The request sent to the Azure Function</param>
-        public void InitialiseSecurity(HttpRequest request)
+        public SecurityResult<T> InitialiseSecurity(HttpRequest request)
         {
+            SecurityResult<T> result = new SecurityResult<T>();
             if (request != null)
             {
                 // If there was a Http Request then get the bearer token from that request
@@ -48,24 +62,19 @@ namespace FunctionApp1
                 if (bearerToken != String.Empty)
                 {
                     // If there was a bearer token
-                    TokenResult result = ValidateToken(bearerToken);
-                    if (result.Success)
+                    TokenResult tokenResult = ValidateToken(bearerToken);
+                    if (tokenResult.Success)
                     {
                         // Translate the permissions list from the resulting claims principal
-                        permissions = new List<T>() { };
+                        result.Permissions = new List<T>() { };
                     }
                 }
+
+                return result;
             }
             else
                 throw new Exception("Cannot initialise security context as there is no Http Context to resolve it from");
         }
-
-        /// <summary>
-        /// Does the current context have permissions of a given type
-        /// </summary>
-        /// <param name="value">The enum item of the pre-defined type</param>
-        /// <returns>If the context has the permission</returns>
-        public Boolean HasPermission(T value) => permissions.Contains(value);
 
         /// <summary>
         /// Validate the token taken from the http context
