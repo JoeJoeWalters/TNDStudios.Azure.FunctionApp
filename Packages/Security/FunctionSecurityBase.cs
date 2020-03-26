@@ -5,40 +5,11 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
 
-namespace FunctionApp1
+namespace TNDStudios.Azure.FunctionApp.Security
 {
-    public enum Permissions
-    {
-        [Description("00001-00001-00001")]
-        TestPermission,
-    }
-
-    public class SecurityResult<T>
-    {
-        /// <summary>
-        /// LIst of permissions derived from the token
-        /// </summary>
-        public List<T> Permissions { get; set; } = new List<T>();
-
-        /// <summary>
-        /// Does the current context have permissions of a given type
-        /// </summary>
-        /// <param name="value">The enum item of the pre-defined type</param>
-        /// <returns>If the context has the permission</returns>
-        public Boolean HasPermission(T value) => Permissions.Contains(value);
-    }
-
-    public class TokenResult
-    {
-        public Boolean Success { get; set; } = false;
-        public ClaimsPrincipal Principal { get; set; } = null;
-    }
-
     public abstract class FunctionSecurityBase<T>
     {
         public virtual String Authority { get; set; }
@@ -130,6 +101,7 @@ namespace FunctionApp1
                 return String.Empty;
         }
 
+        /*
         private HttpRequest ExtractHttpRequest(IReadOnlyDictionary<String, Object> argumentList)
         {
             try
@@ -141,5 +113,6 @@ namespace FunctionApp1
                 return null;
             }
         }
+        */
     }
 }

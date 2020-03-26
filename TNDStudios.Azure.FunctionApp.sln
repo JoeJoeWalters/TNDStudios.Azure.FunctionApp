@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionApp1", "FunctionApp1\FunctionApp1.csproj", "{502F3213-9FFC-40AB-9682-5F94EE8122D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScratchPad", "ScratchPad\ScratchPad.csproj", "{502F3213-9FFC-40AB-9682-5F94EE8122D8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packages", "Packages", "{04E83E3C-0D44-4A37-83E0-63C70CEE20CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Security", "Packages\Security\Security.csproj", "{15244E23-2E96-4240-B4CE-F2CF014646CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{502F3213-9FFC-40AB-9682-5F94EE8122D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{502F3213-9FFC-40AB-9682-5F94EE8122D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{502F3213-9FFC-40AB-9682-5F94EE8122D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15244E23-2E96-4240-B4CE-F2CF014646CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15244E23-2E96-4240-B4CE-F2CF014646CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15244E23-2E96-4240-B4CE-F2CF014646CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15244E23-2E96-4240-B4CE-F2CF014646CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{15244E23-2E96-4240-B4CE-F2CF014646CE} = {04E83E3C-0D44-4A37-83E0-63C70CEE20CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6F2AC3A7-E101-4086-B65B-780EFE382EEF}

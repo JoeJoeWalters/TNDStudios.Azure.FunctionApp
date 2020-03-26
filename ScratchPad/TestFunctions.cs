@@ -3,9 +3,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
+using System.ComponentModel;
+using TNDStudios.Azure.FunctionApp.Security;
 
 namespace FunctionApp1
 {
+    public enum Permissions
+    {
+        [Description("00001-00001-00001")]
+        TestPermission,
+    }
+
     public class TestFunctions : FunctionSecurityBase<Permissions>
     {
         public TestFunctions() : base()
