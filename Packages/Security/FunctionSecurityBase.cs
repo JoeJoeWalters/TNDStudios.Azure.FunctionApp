@@ -19,6 +19,8 @@ namespace TNDStudios.Azure.FunctionApp.Security
 
         public virtual Boolean Debugging { get; set; } = false;
 
+        public virtual SecurityResult<T> SecurityContext { get; set; } = new SecurityResult<T>();
+
         /// <summary>
         /// Starup and initialisation of the security context usually called at the start of the Azure function
         /// </summary>
@@ -38,6 +40,10 @@ namespace TNDStudios.Azure.FunctionApp.Security
                     {
                         // Translate the permissions list from the resulting claims principal
                         result.Permissions = new List<T>() { };
+                        result.Initialised = true;
+
+                        // Set the local context in this class as it can also act as a base context along with returning the result
+                        SecurityContext = result;
                     }
                 }
 
@@ -46,6 +52,13 @@ namespace TNDStudios.Azure.FunctionApp.Security
             else
                 throw new Exception("Cannot initialise security context as there is no Http Context to resolve it from");
         }
+
+        /// <summary>
+        /// Does the current context have permissions of a given type
+        /// </summary>
+        /// <param name="value">The enum item of the pre-defined type</param>
+        /// <returns>If the context has the permission</returns>
+        public Boolean HasPermission(T value) => SecurityContext.HasPermission(value);
 
         /// <summary>
         /// Validate the token taken from the http context

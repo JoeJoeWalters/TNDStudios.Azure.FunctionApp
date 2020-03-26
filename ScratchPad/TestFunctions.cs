@@ -26,9 +26,9 @@ namespace FunctionApp1
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-            SecurityResult<Permissions> security = InitialiseSecurity(req);
+            InitialiseSecurity(req);
 
-            return security.HasPermission(Permissions.TestPermission)
+            return HasPermission(Permissions.TestPermission)
                 ? (ActionResult)new OkObjectResult($"Hello, Tester")
                 : new BadRequestObjectResult("Please pass a name on the query string or in the request body");
         }
