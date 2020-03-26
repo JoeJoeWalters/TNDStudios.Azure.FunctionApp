@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScratchPad", "ScratchPad\Sc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packages", "Packages", "{04E83E3C-0D44-4A37-83E0-63C70CEE20CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Security", "Packages\Security\Security.csproj", "{15244E23-2E96-4240-B4CE-F2CF014646CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Security", "Packages\Security\Security.csproj", "{15244E23-2E96-4240-B4CE-F2CF014646CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mocking", "Packages\Mocking\Mocking.csproj", "{15119831-97EF-4A2F-835B-C13634B192A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,12 +25,17 @@ Global
 		{15244E23-2E96-4240-B4CE-F2CF014646CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15244E23-2E96-4240-B4CE-F2CF014646CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15244E23-2E96-4240-B4CE-F2CF014646CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15119831-97EF-4A2F-835B-C13634B192A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15119831-97EF-4A2F-835B-C13634B192A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15119831-97EF-4A2F-835B-C13634B192A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15119831-97EF-4A2F-835B-C13634B192A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{15244E23-2E96-4240-B4CE-F2CF014646CE} = {04E83E3C-0D44-4A37-83E0-63C70CEE20CA}
+		{15119831-97EF-4A2F-835B-C13634B192A9} = {04E83E3C-0D44-4A37-83E0-63C70CEE20CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6F2AC3A7-E101-4086-B65B-780EFE382EEF}
