@@ -12,10 +12,10 @@ namespace TNDStudios.Azure.FunctionApp.Security
 {
     public abstract class FunctionSecurityBase<T>
     {
-        public virtual String Authority { get; set; }
-        public virtual String ValidAudiences { get; set; }
-        public virtual String ValidIssuers { get; set; }
-        public virtual String SigningKeys { get; set; }
+        public abstract String Authority { get; set; }
+        public abstract String ValidAudiences { get; set; }
+        public abstract String ValidIssuers { get; set; }
+        public abstract String SigningKeys { get; set; }
 
         public virtual Boolean Debugging { get; set; } = false;
 

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
+using System;
 using System.ComponentModel;
 using TNDStudios.Azure.FunctionApp.Security;
 
@@ -16,6 +17,14 @@ namespace FunctionApp1
 
     public class TestFunctions : FunctionSecurityBase<Permissions>
     {
+        /// <summary>
+        /// Enforced requirements to defined audience, keys etc. for security
+        /// </summary>
+        public override string Authority { get; set; } = String.Empty;
+        public override string ValidAudiences { get; set; } = String.Empty;
+        public override string ValidIssuers { get; set; } = String.Empty;
+        public override string SigningKeys { get; set; } = String.Empty;
+
         public TestFunctions() : base()
         {
 
